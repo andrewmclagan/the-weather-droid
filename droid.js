@@ -21,7 +21,7 @@ Droid.prototype.acceptedKeywords = ['today', 'tomorrow', 'forecast'];
 /**
  * Post a new tweet
  *
- * @param String status
+ * @param String status 
  * @param Callback callback
  */
 Droid.prototype.tweet = function (status, callback) {
@@ -159,6 +159,7 @@ Droid.prototype.heatIndex = function (temp, humidity) {
 
 /**
  * Prases weather data into a human readable string... kinda...
+ * TODO: split into package
  *
  * @param Object weatherData
  * @param String tense
