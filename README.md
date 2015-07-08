@@ -10,6 +10,8 @@ A simple node.js twitter weather bot with minimal dependencies.
 
 ### The Solution
 
+A NodeJS stck was choosen as most appropriate for a simple application that consumes an external API and impliments a socket like connection. Other technologies such as PHP, RUBY and Python would require much more code to leverage the same, simple abilities. 
+
 The bot basically consumes the Twitter v1.1 API, socket streaming direct messages (to user `@TheWeatherDroid`) and parsing the content through some basic reg-ex functions. There is a very basic/loose natural language algorithm that responds to requests for weather data in plain english. Temperature is determined as "relative temperature" via a **Heat Index** algorithem https://en.wikipedia.org/wiki/Heat_index.
 
 See Roadmap for more information.
