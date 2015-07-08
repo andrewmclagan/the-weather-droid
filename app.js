@@ -14,4 +14,3 @@ stream.on('message', function (msg) {
         WeatherDroid.parseTweet(msg.text, msg.user.screen_name);
     }
 });
-

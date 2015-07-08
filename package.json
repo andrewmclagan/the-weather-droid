@@ -5,6 +5,7 @@
   "main": "./app.js",
   "dependencies": {
     "lodash": "^3.10.0",
+    "nlp_compromise": "^1.1.2",
     "openweathermap": "^1.0.0",
     "twit": "^2.1.0"
   },

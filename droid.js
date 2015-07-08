@@ -2,6 +2,7 @@
 
 var Twit    = require('./node_modules/twit/lib/twitter');
 var Weather = require('./weather.js');
+var NLP     = require('nlp_compromise');
 
 var Droid   = module.exports = function(config) { 
   this.twit = new Twit(config);
@@ -166,88 +167,88 @@ Droid.prototype.humanizeWeatherData = function (weatherData, weatherClass, tense
 
     // weather data
     var heatIndex       = this.heatIndex(weatherData.temp, weatherData.humidity);
-    var classification  = weatherClass;
-    var response        = '';
-
-    // tense string
-    var currentTense = (tense == 'future') ? 'it will be' : 'it\s';
-
-    // temp strings
-    var tempCold    = [
-        'Better rug up '+currentTense+' cold',
-        'Brrrr! '+currentTense+' '+weatherData.temp+'c', 
-        'Uh oh! '+currentTense+' '+weatherData.temp+'c take something warm',
-        'Glad I\'m a droid! '+currentTense+' only '+weatherData.temp+'c'
-    ];
-    var tempWarm    = [
-        currentTense+' '+weatherData.temp+'c thats warm',
-        'Looks like '+currentTense+' warm day '+weatherData.temp+'c ',
-        +currentTense+' mighty fine at '+weatherData.temp+'c'
-    ]
-    var tempHot     = [
-        'Wow! '+currentTense+' a hot one at '+weatherData.temp+'c',
-        'Time for a swim! '+currentTense+' '+weatherData.temp+'c'
-    ]
-
-    // class strings
-    var classRain = [
-        ', take an umbrella it might rain.'
-    ];
-    var classCloud = [
-        ', also '+currentTense+' looking cloudy.'
-    ];  
-    var classSnow = [
-        ', take your snow shoes looks like a white xmas!.'
-    ];        
-    var classExtreme = [
-        '... take care '+currentTense+' going to be wild!.'
-    ];            
-    var classSunny = [
-        ' and '+currentTense+' sunny!'
-    ];                
-
-    // build temp response
-    if (heatIndex < 15) {
-
-        response = response + tempCold[Math.floor(Math.random()*tempCold.length)];
-    }
-    else if (heatIndex > 15 && heatIndex < 29) {
-
-        response = response + tempWarm[Math.floor(Math.random()*tempWarm.length)];
-    }
-    else if (heatIndex > 29) {
-
-        response = response + tempHot[Math.floor(Math.random()*tempHot.length)];  
-    }
+    var tip             = '';
 
     // build class response
-    switch(classification) {
+    switch(weatherClass) {
 
         case 'Clouds':
-            response = response + classCloud[Math.floor(Math.random()*classCloud.length)];
+            weatherClass = 'cloudy';
             break;
 
         case 'Rain':
-            response = response + classRain[Math.floor(Math.random()*classRain.length)];
+            weatherClass = 'rainy'
             break;
 
         case 'Clear':
-            response = response + classSunny[Math.floor(Math.random()*classSunny.length)];
+            weatherClass = 'clear'
             break;  
 
         case 'Snow':
-            response = response + classSnow[Math.floor(Math.random()*classSnow.length)];
+            weatherClass = 'snowing!'
             break; 
 
         case 'Extreme':
-            response = response + classExtreme[Math.floor(Math.random()*classExtreme.length)];
+            weatherClass = 'wild!!'
             break;                                      
 
         default:
-            response = response + ' and the weather would be classed '+classification;
+            weatherClass = 'and classed as '+weatherClass;
     }    
 
+    // description strings
+    var tempDescriptions = [
+        this.parseTense('It is',tense)+' '+weatherData.temp+'C (feels like '+Math.round(heatIndex)+'C) outside',
+        this.parseTense('It is',tense)+' '+weatherData.temp+'C (feels like '+Math.round(heatIndex)+'C)',
+        'The temprature '+this.parseTense('is',tense)+' '+weatherData.temp+'C (feels like '+Math.round(heatIndex)+'C)',
+    ];
+    var classDescriptions = [
+        'and '+weatherClass,
+        'and '+this.parseTense('will be',tense)+' '+weatherClass
+    ];
+    var tipDescription = {
+        cold:   ['don\'t forget to rug up!', 'stay warm.','Brrrr thats chilly!','don\'t catch a cold!'],
+        warm:   ['enjoy the day!','go to the park.','go outside its warm!'],
+        hot:    ['take your swimmers...','it\'s beach weather!'],
+        wet:    ['pack an umberalla.', 'wear a raincoat.', 'stay dry..!'],
+    };
+
+    // determine tip
+    if (heatIndex < 15) {
+        tip = tipDescription.cold[Math.floor(Math.random()*tipDescription.cold.length)];
+    }
+    else if (heatIndex > 15 && heatIndex < 29) {
+        tip = tipDescription.warm[Math.floor(Math.random()*tipDescription.warm.length)];
+    }
+    else if (heatIndex > 29) {
+        tip = tipDescription.hot[Math.floor(Math.random()*tipDescription.hot.length)];
+    }
+
+    if ( !(Math.random()+.5|0) && weatherClass == 'Rain') {
+        tip = tipDescription.wet[Math.floor(Math.random()*tipDescription.wet.length)];
+    }
+
+    // build
+    var response =  tempDescriptions[Math.floor(Math.random()*tempDescriptions.length)] +
+                    ' ' +
+                    classDescriptions[Math.floor(Math.random()*classDescriptions.length)] +
+                    ', ' +
+                    tip;
+    
     return response;
+};
+
+/**
+ * parse tense
+ *
+ * @param String text
+ * @param String tense
+ */
+Droid.prototype.parseTense = function (text, tense) {
+
+    text = NLP.pos(text);
+
+    return (tense == 'future') ? text.to_future().text() : text.to_present().text();
 };
 
 /**
