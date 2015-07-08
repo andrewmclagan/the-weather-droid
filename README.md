@@ -41,7 +41,7 @@ Currently deploying on **Linode Cloud Infrastructure** via **Forge** provisionin
 **0.2.0**
 * [ ] Write more unit tests (Jasmine v2.0.1)
 * [ ] Abstract natural language algorithm into separate package
-* [ ] Refactor natural language algorithms to better predict input
+* [X] Refactor natural language algorithms to better predict input
 * [ ] Better test coverage
 * [ ] Implement Continuous Integration with TravisCI
 
