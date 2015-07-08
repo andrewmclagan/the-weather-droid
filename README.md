@@ -10,7 +10,23 @@ A simple node.js twitter weather bot with minimal dependencies.
 
 ### The Solution
 
-The bot basically consumes the Twitter v1.1 API, socket streaming direct messages (to user `@TheWeatherDroid`) and parsing the content through some basic reg-ex functions. There is a very basic/loose natural language algorithm that responds to requests for weather data in plain english.
+The bot basically consumes the Twitter v1.1 API, socket streaming direct messages (to user `@TheWeatherDroid`) and parsing the content through some basic reg-ex functions. There is a very basic/loose natural language algorithm that responds to requests for weather data in plain english. Temperature is determined as "relative temperature" via a **Heat Index** algorithem https://en.wikipedia.org/wiki/Heat_index.
+
+See Roadmap for more information.
+
+### Installation
+
+The application has very minimal dependencies and requirements aside from a typical NodeJS stack.
+
+1. Simply clone this repository.
+2. Install the dependencies via `npm install`
+3. Run the bot via `node app`
+
+### Deployment
+
+On such a small project its difficult to demonstrate proper deployment practices. In reality I would implement CI (continuous Integration) and automated test suites for solid health checks.
+
+Currently deploying on **Linode Cloud Infrastructure** via **Forge** provisioning and deployment service. 
 
 ### Roadmap
 
@@ -31,20 +47,6 @@ The bot basically consumes the Twitter v1.1 API, socket streaming direct message
 * [ ] Better Error handling 
 * [ ] Multiple weather sources
 * TBA...
-
-### Installation
-
-The application has very minimal dependencies and requirements aside from a typical NodeJS stack.
-
-1. Simply clone this repository.
-2. Install the dependencies via `npm install`
-3. Run the bot via `node app`
-
-### Deployment
-
-On such a small project its difficult to demonstrate proper deployment practices. In reality I would implement CI (continuous Integration) and automated test suites for solid health checks.
-
-Currently deploying on **Linode Cloud Infrastructure** via **Forge** provisioning and deployment service. 
 
 **NOTE** be aware that any push to `master` will trigger a deployment on the production server.
 
@@ -74,5 +76,7 @@ As the applications requirements were very basic there are few software design p
 ### Time 
 
 Developed in ~1.5hrs
+
+
 
 
