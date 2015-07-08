@@ -1,0 +1,11 @@
+{
+  "name": "weather-droid",
+  "version": "0.1.0",
+  "description": "The Weather Droid",
+  "main": "./app.js",
+  "dependencies": {
+    "openweathermap": "^1.0.0",
+    "twit": "^2.1.0"
+  },
+  "devDependencies": {}
+}
