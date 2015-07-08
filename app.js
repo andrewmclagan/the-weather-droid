@@ -11,6 +11,7 @@ stream.on('message', function (msg) {
   
     if (typeof msg.text == 'string') {
 
-        WeatherDroid.parseTweet(msg.text, msg.user.scren_name);
+        WeatherDroid.parseTweet(msg.text, msg.user.screen_name);
     }
 });
+
