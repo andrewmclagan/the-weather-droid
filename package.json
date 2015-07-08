@@ -4,6 +4,7 @@
   "description": "The Weather Droid",
   "main": "./app.js",
   "dependencies": {
+    "lodash": "^3.10.0",
     "openweathermap": "^1.0.0",
     "twit": "^2.1.0"
   },
