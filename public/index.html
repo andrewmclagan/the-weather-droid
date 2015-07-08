@@ -15,20 +15,39 @@
 
         <style>
 
+            @import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
+
             body, html {
                 padding: 0;
                 margin: 0;
+                height: 100%;
+                width: 100%;
+                text-align: center;
             }
 
-            .owl-image {
+            .centered {
               position: relative;
               top: 50%;
               transform: translateY(-50%);
+              display: block;
+              margin-top: -30px;
+            }
+
+            h1 {
+                font-family: 'Oswald', sans-serif;
+                color: #777777;
+                font-weight: 100;
+                font-size: 40px;
+                margin-top: -30px;
+                letter-spacing: 1px;            
             }
 
         </style>
 
-        <img src="assets/img/owl.jpg" class="owl-image" />
+        <div class="centered">
+            <img src="assets/img/owl.jpg" class="owl-image" />
+            <h1>The Weather Droid</h1>
+        </div>
 
     </body>
 </html>
