@@ -164,7 +164,7 @@ Droid.prototype.heatIndex = function (temp, humidity) {
  * @param Object weatherData
  * @param String tense
  */
-Droid.prototype.humanizeWeatherData = function (weatherData, weatherClass, tense) {
+Droid.prototype.humanizeWeatherData = function (weatherData, weatherClass, tense, location) {
 
     // weather data
     var heatIndex       = this.heatIndex(weatherData.temp, weatherData.humidity);
@@ -233,7 +233,7 @@ Droid.prototype.humanizeWeatherData = function (weatherData, weatherClass, tense
     var response =  tempDescriptions[Math.floor(Math.random()*tempDescriptions.length)] +
                     ' ' +
                     classDescriptions[Math.floor(Math.random()*classDescriptions.length)] +
-                    ', ' +
+                    ' in ' + location + ', ' +
                     tip;
     
     return response;
@@ -263,7 +263,7 @@ Droid.prototype.todaysWeather = function (postcode) {
 
     Weather.now({zip: postcode+',AU'}, function(err, response) {
 
-        var text = _self.humanizeWeatherData(response.main, response.weather[0].main);
+        var text = _self.humanizeWeatherData(response.main, response.weather[0].main, '', response.name);
 
         _self.tweet(text, function(){});
     }); 
@@ -294,7 +294,7 @@ Droid.prototype.tomorrowsWeather = function (postcode) {
             }
         }
 
-        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future');
+        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', response.name);
 
         _self.tweet(text, function(){});
     }); 
@@ -325,7 +325,7 @@ Droid.prototype.weatherForecast = function (postcode, days) {
             }
         }
 
-        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future');
+        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', response.name);
 
         _self.tweet(text, function(){});
     }); 
