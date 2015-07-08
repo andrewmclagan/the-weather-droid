@@ -294,7 +294,7 @@ Droid.prototype.tomorrowsWeather = function (postcode) {
             }
         }
 
-        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', response.name);
+        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', postcode);
 
         _self.tweet(text, function(){});
     }); 
@@ -325,7 +325,7 @@ Droid.prototype.weatherForecast = function (postcode, days) {
             }
         }
 
-        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', response.name);
+        var text = _self.humanizeWeatherData(weatherData, weatherClass, 'future', postcode);
 
         _self.tweet(text, function(){});
     }); 
